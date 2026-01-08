@@ -118,19 +118,10 @@
             <div class="vocab-selection" id="vocabSelection"">
                 <h2>어휘 목록 선택</h2>
                 <div class="vocab-buttons" style="display: flex; gap: 10px; flex-direction: row;">
-<<<<<<< HEAD
-                    <!-- 국립국어원 어휘목록 주석 처리 -->
-                    <!--
-=======
->>>>>>> cd9b0c4 (Initial commit)
                     <button class="vocab-btn" data-vocab="national">
                         <div class="vocab-icon">📚</div>
                         <div class="vocab-name">국립국어원<br>어휘목록</div>
                     </button>
-<<<<<<< HEAD
-                    -->
-=======
->>>>>>> cd9b0c4 (Initial commit)
                     <button class="vocab-btn" data-vocab="education">
                         <div class="vocab-icon">🎓</div>
                         <div class="vocab-name">시도교육청<br>정리 어휘</div>
@@ -150,29 +141,17 @@
             <div class="difficulty-buttons">
                 <button class="difficulty-btn" data-difficulty="easy">
                     <div class="difficulty-icon">🟢</div>
-<<<<<<< HEAD
-                    <div class="difficulty-name">초급</div>
-=======
                     <div class="difficulty-name">쉬움</div>
->>>>>>> cd9b0c4 (Initial commit)
                     <div class="difficulty-desc">초등 저학년</div>
                 </button>
                 <button class="difficulty-btn" data-difficulty="medium">
                     <div class="difficulty-icon">🟡</div>
-<<<<<<< HEAD
-                    <div class="difficulty-name">중급</div>
-=======
                     <div class="difficulty-name">보통</div>
->>>>>>> cd9b0c4 (Initial commit)
                     <div class="difficulty-desc">초등 고학년</div>
                 </button>
                 <button class="difficulty-btn" data-difficulty="hard">
                     <div class="difficulty-icon">🔴</div>
-<<<<<<< HEAD
-                    <div class="difficulty-name">고급</div>
-=======
                     <div class="difficulty-name">어려움</div>
->>>>>>> cd9b0c4 (Initial commit)
                     <div class="difficulty-desc">중학생 이상</div>
                 </button>
             </div>
@@ -201,40 +180,6 @@
 
     <!-- 게임 화면 -->
     <div class="game-container" id="gameContainer" style="display: none;">
-<<<<<<< HEAD
-        <!-- 상단 헤더 -->
-        <header class="game-header">
-            <div class="header-left">
-                <button class="btn-back-small" id="backToDifficultyBtn">뒤로 가기</button>
-            </div>
-            <div class="header-center">
-                <h1 class="game-title">십자말퍼즐</h1>
-            </div>
-            <div class="header-right">
-                <div class="header-stats">
-                    <div class="stat-item" id="levelInfo" style="display: none;">
-                        <span class="stat-label">단계</span>
-                        <span class="stat-value" id="levelNumber">1</span>
-                    </div>
-                    <div class="stat-item" id="timerInfo" style="display: none;">
-                        <span class="stat-label">시간</span>
-                        <span class="stat-value" id="timerValue">00:00</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">점수</span>
-                        <span class="stat-value" id="scoreValue">0</span>
-                    </div>
-                </div>
-                <div class="header-actions">
-                    <button class="btn-icon" id="viewToggleBtn" title="Grid/List 전환">📋</button>
-                    <button class="btn-icon" id="settingsBtnGame" title="설정">⚙️</button>
-                </div>
-            </div>
-        </header>
-
-        <!-- 메인 게임 영역 -->
-        <div class="game-main">
-=======
         <header class="game-header">
             <button class="btn-back-small" id="backToDifficultyBtn">←</button>
             <div class="header-center">
@@ -271,7 +216,6 @@
         -->
 
         <div class="game-content">
->>>>>>> cd9b0c4 (Initial commit)
             <!-- List View (단서 리스트 모드) -->
             <div class="list-view" id="listView" style="display: none;">
                 <div class="clues-list-full" id="cluesListFull">
@@ -279,83 +223,6 @@
                 </div>
             </div>
 
-<<<<<<< HEAD
-            <!-- Grid View (격자 모드) - natmal.com 스타일 -->
-            <div class="grid-view" id="gridView">
-                <div class="game-layout">
-                    <!-- 왼쪽: 격자 -->
-                    <div class="grid-wrapper">
-                        <!-- 힌트 슬라이드 (그리드 위) -->
-                        <div class="hints-slider-container" id="hintsSliderContainer" style="display: none;">
-                            <div class="hints-slider">
-                                <button class="hint-nav-btn hint-prev" id="hintPrevBtn">‹</button>
-                                <div class="hints-slides" id="hintsSlides">
-                                    <!-- 힌트들이 여기에 동적으로 추가됩니다 -->
-                                </div>
-                                <button class="hint-nav-btn hint-next" id="hintNextBtn">›</button>
-                            </div>
-                            <div class="hints-indicator" id="hintsIndicator">
-                                <!-- 슬라이드 인디케이터 -->
-                            </div>
-                        </div>
-                        
-                        <!-- 입력창 (그리드 위) -->
-                        <div class="input-section" id="inputSection" style="display: none;">
-                            <!-- <div class="selected-clue-info" id="selectedClueInfo"></div> -->
-                            <div class="input-field-wrapper">
-                                <input type="text" id="mobileInput" class="mobile-input" placeholder="글자를 입력하세요" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                                <button class="btn-control btn-check-word-inline" id="checkWordBtn" title="단어 확인">✓ 확인</button>
-                            </div>
-                            <div id="directionHint" class="direction-hint" style="display:none;"></div>
-                        </div>
-
-                        <div class="game-controls">
-                            <div class="controls-row">
-                                <button class="btn-control" id="hintBtn" title="힌트">💡 힌트</button>
-                                <button class="btn-control" id="revealWordBtn" title="단어 공개">🔓 정답보기</button>
-                                <button class="btn-control" id="checkAllBtn" title="전체 확인">✓ 전체확인</button>
-                                <button class="btn-control" id="clearPuzzleBtn" title="초기화">🗑️ 초기화</button>
-                            </div>
-                        </div>
-                        
-                        <div class="grid-card">
-                            <!-- Canvas 기반 격자 -->
-                            <div class="canvas-container" id="canvasContainer" style="display: none;">
-                                <canvas id="crosswordCanvas"></canvas>
-                            </div>
-                            <!-- HTML 기반 격자 -->
-                            <div class="grid-container" id="gridContainer">
-                                <!-- 격자가 여기에 동적으로 생성됩니다 -->
-                            </div>
-                        </div>
-
-                        
-                    </div>
-
-                    <!-- 오른쪽: 단서 목록 -->
-                    <div class="clues-wrapper">
-                        <div class="clues-card">
-                            <!-- 가로 단서 섹션 -->
-                            <div class="clues-section-group">
-                                <div class="clues-section-header">
-                                    <h4>가로</h4>
-                                </div>
-                                <div class="clues-list clues-list-across" id="cluesListAcross">
-                                    <!-- 가로 질문들이 여기에 동적으로 추가됩니다 -->
-                                </div>
-                            </div>
-                            
-                            <!-- 세로 단서 섹션 -->
-                            <div class="clues-section-group">
-                                <div class="clues-section-header">
-                                    <h4>세로</h4>
-                                </div>
-                                <div class="clues-list clues-list-down" id="cluesListDown">
-                                    <!-- 세로 질문들이 여기에 동적으로 추가됩니다 -->
-                                </div>
-                            </div>
-                        </div>
-=======
             <!-- Grid View (격자 모드) -->
             <div class="grid-view" id="gridView">
                 <div class="clues-section">
@@ -372,27 +239,10 @@
                     <!-- HTML 기반 격자 (기존) -->
                     <div class="grid-container" id="gridContainer">
                         <!-- 격자가 여기에 동적으로 생성됩니다 -->
->>>>>>> cd9b0c4 (Initial commit)
                     </div>
                 </div>
             </div>
 
-<<<<<<< HEAD
-        </div>
-
-        <!-- 하단 컨트롤 버튼 -->
-        <!-- <div class="game-controls">
-            <div class="controls-row">
-                <button class="btn-control" id="hintBtn" title="힌트">💡 힌트</button>
-                <button class="btn-control" id="revealWordBtn" title="단어 공개">🔓 공개</button>
-                <button class="btn-control" id="checkWordBtn" title="단어 확인">✓ 확인</button>
-                <button class="btn-control" id="checkAllBtn" title="전체 확인">✓✓ 전체</button>
-                <button class="btn-control" id="clearPuzzleBtn" title="초기화">🗑️ 초기화</button>
-            </div>
-        </div> -->
-
-        <!-- 모달 -->
-=======
             <div class="word-selection-section" id="wordSelectionSection" style="display: none;">
                 <div class="selected-clue" id="selectedClue"></div>
                 <div id="directionHint" class="direction-hint" style="display:none;"></div>
@@ -411,7 +261,20 @@
             </div>
         </div>
 
->>>>>>> cd9b0c4 (Initial commit)
+        <div class="game-controls">
+            <div class="control-group">
+                <button class="btn btn-hint" id="hintBtn" title="힌트 (글자 하나 보기)">💡 힌트</button>
+                <button class="btn btn-reveal" id="revealWordBtn" title="현재 단어 공개">🔓 단어 공개</button>
+                <button class="btn btn-check-word" id="checkWordBtn" title="현재 단어 확인">✓ 단어 확인</button>
+            </div>
+            <div class="control-group">
+                <button class="btn btn-check-all" id="checkAllBtn" title="전체 확인">✓✓ 전체 확인</button>
+                <button class="btn btn-clear" id="clearPuzzleBtn" title="퍼즐 초기화">🗑️ 초기화</button>
+                <button class="btn btn-reset" id="resetBtn" title="다시 시작">🔄 다시 시작</button>
+            </div>
+            <button class="btn btn-next" id="nextBtn" style="display: none;">다음 단계</button>
+        </div>
+
         <div class="modal" id="modal">
             <div class="modal-content">
                 <h2 id="modalTitle">축하합니다!</h2>

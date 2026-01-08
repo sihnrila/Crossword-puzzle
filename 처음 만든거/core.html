@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Classic Crossword - Fixed Bug</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background: #f4f4f4; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { display: flex; gap: 20px; max-width: 1200px; width: 100%; }
+        .sidebar { width: 350px; background: #fff; padding: 15px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .input-group { margin-bottom: 15px; }
+        label { font-weight: bold; font-size: 14px; display: block; margin-bottom: 5px; }
+        textarea { width: 100%; height: 120px; box-sizing: border-box; resize: none; border: 1px solid #ddd; padding: 8px; font-size: 13px; }
+        select { width: 100%; padding: 8px; border: 1px solid #ddd; margin-bottom: 10px; }
+        button { width: 100%; padding: 12px; margin-top: 5px; cursor: pointer; font-weight: bold; border: 1px solid #999; border-radius: 4px; }
+        .btn-generate { background: #e0e0e0; color: #333; }
+        .btn-reveal { background: #28a745; color: white; border: none; }
+        .main-content { flex: 1; background: #fff; padding: 20px; border: 1px solid #ccc; text-align: center; border-radius: 5px; }
+        table.crossword { border-collapse: collapse; border: 2px solid black; margin: 0 auto; }
+        table.crossword td { width: 32px; height: 32px; border: 1px solid black; padding: 0; position: relative; vertical-align: top; }
+        .numero { font-size: 10px; color: black; position: absolute; top: 1px; left: 1px; line-height: 1; pointer-events: none; z-index: 2; }
+        .char-input { width: 100%; height: 100%; border: none; text-align: center; font-size: 18px; font-weight: bold; outline: none; background: transparent; padding-top: 6px; box-sizing: border-box; text-transform: uppercase; position: relative; z-index: 1; }
+        .clues-section { display: flex; gap: 40px; margin-top: 20px; text-align: left; border-top: 1px solid #ccc; padding-top: 15px; width: 100%; }
+        .failed-msg { color: #d9534f; font-size: 12px; margin-top: 10px; white-space: pre-line; font-weight: bold; }
+        .revealed { background-color: #e8f0fe !important; color: #1a73e8; }
+    </style>
+</head>
+<body>
+
+<h2>🧩 연결 강화 십자말풀이 (버그 수정 완료)</h2>
+
+<div class="container">
+    <div class="sidebar">
+        <div class="input-group">
+            <label>격자 크기:</label>
+            <select id="gridSize">
+                <option value="6">6 x 6</option>
+                <option value="8">8 x 8</option>
+                <option value="10" selected>10 x 10</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label>1. 단어 리스트</label>
+            <textarea id="wordListInput">학교
+학생
+생활
+활동
+동아리</textarea>
+        </div>
+        <div class="input-group">
+            <label>2. 힌트 리스트</label>
+            <textarea id="hintListInput">공부하는 곳
+공부하는 사람
+살아가는 모습
+움직이는 행위
+취미 모임</textarea>
+        </div>
+        <button class="btn-generate" onclick="generate()">퍼즐 생성하기</button>
+        <button class="btn-reveal" onclick="revealAnswers()">정답 확인 (전체 채우기)</button>
+        <div id="failedList" class="failed-msg"></div>
+    </div>
+
+    <div class="main-content">
+        <div id="grid-container"></div>
+        <div class="clues-section">
+            <div style="flex:1;"><h4>가로</h4><ul id="acrossClues"></ul></div>
+            <div style="flex:1;"><h4>세로</h4><ul id="downClues"></ul></div>
+        </div>
+    </div>
+</div>
+
+<script>
+let SIZE, grid, wordsData;
+
+function init() {
+    SIZE = parseInt(document.getElementById('gridSize').value);
+    grid = Array.from({ length: SIZE }, () => Array(SIZE).fill(null));
+    wordsData = [];
+    document.getElementById('failedList').innerText = '';
+}
+
+function isOcc(r, c) {
+    if (r < 0 || r >= SIZE || c < 0 || c >= SIZE) return false;
+    // grid 자체가 undefined인 경우 방지
+    if (!grid[r]) return false;
+    return grid[r][c] !== null;
+}
+
+function canPlace(word, r, c, dir) {
+    if (dir === 'H' && c + word.length > SIZE) return { can: false };
+    if (dir === 'V' && r + word.length > SIZE) return { can: false };
+
+    let overlapCount = 0;
+    for (let i = 0; i < word.length; i++) {
+        let cr = dir === 'H' ? r : r + i;
+        let cc = dir === 'H' ? c + i : c;
+
+        if (grid[cr][cc] !== null) {
+            if (grid[cr][cc] !== word[i]) return { can: false };
+            overlapCount++;
+        } else {
+            // 주변 인접 칸 검사 (글자가 엉겨붙지 않게 함)
+            if (dir === 'H') {
+                if (isOcc(cr - 1, cc) || isOcc(cr + 1, cc)) return { can: false };
+                if (i === 0 && isOcc(cr, cc - 1)) return { can: false };
+                if (i === word.length - 1 && isOcc(cr, cc + 1)) return { can: false };
+            } else {
+                if (isOcc(cr, cc - 1) || isOcc(cr, cc + 1)) return { can: false };
+                if (i === 0 && isOcc(cr - 1, cc)) return { can: false };
+                if (i === word.length - 1 && isOcc(cr + 1, cc)) return { can: false };
+            }
+        }
+    }
+    return { can: true, overlap: overlapCount };
+}
+
+function generate() {
+    init();
+    const wordArr = document.getElementById('wordListInput').value.trim().split('\n');
+    const hintArr = document.getElementById('hintListInput').value.trim().split('\n');
+    let words = wordArr.map((w, i) => ({ word: w.trim(), hint: hintArr[i] ? hintArr[i].trim() : "힌트 없음" }))
+                   .filter(o => o.word.length > 1)
+                   .sort((a, b) => b.word.length - a.word.length);
+
+    words.forEach((item) => {
+        let best = [];
+        let backup = [];
+
+        for (let r = 0; r < SIZE; r++) {
+            for (let c = 0; c < SIZE; c++) {
+                for (let dir of ['H', 'V']) {
+                    let res = canPlace(item.word, r, c, dir);
+                    if (res.can) {
+                        if (res.overlap > 0) {
+                            best.push({ r, c, dir, overlap: res.overlap });
+                        } else {
+                            backup.push({ r, c, dir, overlap: 0 });
+                        }
+                    }
+                }
+            }
+        }
+
+        // 1. 겹치는 자리가 있다면 무조건 거기 먼저!
+        if (wordsData.length > 0 && best.length > 0) {
+            best.sort((a, b) => b.overlap - a.overlap);
+            placeWord(item, best[0]);
+        } 
+        // 2. 첫 단어거나, 겹칠 수 없으면 빈 공간에 배치
+        else if (wordsData.length === 0 || backup.length > 0) {
+            let choice = (wordsData.length === 0) ? 
+                         backup[Math.floor(Math.random() * backup.length)] : 
+                         backup[Math.floor(Math.random() * backup.length)];
+            if(choice) placeWord(item, choice);
+            else document.getElementById('failedList').innerText += `❌ 배치 불가: ${item.word}\n`;
+        } else {
+            document.getElementById('failedList').innerText += `❌ 연결 실패: ${item.word}\n`;
+        }
+    });
+    render();
+}
+
+function placeWord(item, choice) {
+    for (let i = 0; i < item.word.length; i++) {
+        let rr = choice.dir === 'H' ? choice.r : choice.r + i;
+        let cc = choice.dir === 'H' ? choice.c + i : choice.c;
+        grid[rr][cc] = item.word[i];
+    }
+    wordsData.push({ ...item, r: choice.r, c: choice.c, dir: choice.dir });
+}
+
+function render() {
+    wordsData.sort((a, b) => a.r - b.r || a.c - b.c).forEach((w, i) => w.num = i + 1);
+    let tableHtml = '<table border="1" bordercolor="black" class="crossword"><tbody>';
+    for (let r = 0; r < SIZE; r++) {
+        tableHtml += '<tr>';
+        for (let c = 0; c < SIZE; c++) {
+            if (grid[r][c]) {
+                const start = wordsData.find(w => w.r === r && w.c === c);
+                tableHtml += `<td>`;
+                if (start) tableHtml += `<div class="numero">${start.num}</div>`;
+                tableHtml += `<input class="char-input" maxlength="1" data-ans="${grid[r][c]}"></td>`;
+            } else {
+                tableHtml += `<td bgcolor="black"><img src="https://www.armoredpenguin.com/crossword/Images/black.gif" width="32" height="32"></td>`;
+            }
+        }
+        tableHtml += '</tr>';
+    }
+    tableHtml += '</tbody></table>';
+    document.getElementById('grid-container').innerHTML = tableHtml;
+    
+    // 힌트 출력 로직 (번호 꼬임 방지)
+    document.getElementById('acrossClues').innerHTML = wordsData.filter(w => w.dir === 'H').map(w => `<li>${w.num}. ${w.hint}</li>`).join('');
+    document.getElementById('downClues').innerHTML = wordsData.filter(w => w.dir === 'V').map(w => `<li>${w.num}. ${w.hint}</li>`).join('');
+}
+
+function revealAnswers() {
+    document.querySelectorAll('.char-input').forEach(input => {
+        input.value = input.dataset.ans;
+        input.classList.add('revealed');
+    });
+}
+window.onload = generate;
+</script>
+</body>
+</html>
