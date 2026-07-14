@@ -118,19 +118,13 @@
             <div class="vocab-selection" id="vocabSelection"">
                 <h2>어휘 목록 선택</h2>
                 <div class="vocab-buttons" style="display: flex; gap: 10px; flex-direction: row;">
-<<<<<<< HEAD
                     <!-- 국립국어원 어휘목록 주석 처리 -->
                     <!--
-=======
->>>>>>> cd9b0c4 (Initial commit)
                     <button class="vocab-btn" data-vocab="national">
                         <div class="vocab-icon">📚</div>
                         <div class="vocab-name">국립국어원<br>어휘목록</div>
                     </button>
-<<<<<<< HEAD
                     -->
-=======
->>>>>>> cd9b0c4 (Initial commit)
                     <button class="vocab-btn" data-vocab="education">
                         <div class="vocab-icon">🎓</div>
                         <div class="vocab-name">시도교육청<br>정리 어휘</div>
@@ -150,29 +144,17 @@
             <div class="difficulty-buttons">
                 <button class="difficulty-btn" data-difficulty="easy">
                     <div class="difficulty-icon">🟢</div>
-<<<<<<< HEAD
                     <div class="difficulty-name">초급</div>
-=======
-                    <div class="difficulty-name">쉬움</div>
->>>>>>> cd9b0c4 (Initial commit)
                     <div class="difficulty-desc">초등 저학년</div>
                 </button>
                 <button class="difficulty-btn" data-difficulty="medium">
                     <div class="difficulty-icon">🟡</div>
-<<<<<<< HEAD
                     <div class="difficulty-name">중급</div>
-=======
-                    <div class="difficulty-name">보통</div>
->>>>>>> cd9b0c4 (Initial commit)
                     <div class="difficulty-desc">초등 고학년</div>
                 </button>
                 <button class="difficulty-btn" data-difficulty="hard">
                     <div class="difficulty-icon">🔴</div>
-<<<<<<< HEAD
                     <div class="difficulty-name">고급</div>
-=======
-                    <div class="difficulty-name">어려움</div>
->>>>>>> cd9b0c4 (Initial commit)
                     <div class="difficulty-desc">중학생 이상</div>
                 </button>
             </div>
@@ -201,7 +183,6 @@
 
     <!-- 게임 화면 -->
     <div class="game-container" id="gameContainer" style="display: none;">
-<<<<<<< HEAD
         <!-- 상단 헤더 -->
         <header class="game-header">
             <div class="header-left">
@@ -234,44 +215,6 @@
 
         <!-- 메인 게임 영역 -->
         <div class="game-main">
-=======
-        <header class="game-header">
-            <button class="btn-back-small" id="backToDifficultyBtn">←</button>
-            <div class="header-center">
-                <div class="level-info">
-                    <span class="level-label">단계</span>
-                    <span class="level-number" id="levelNumber">1</span>
-                </div>
-                <div class="timer-info" id="timerInfo" style="display: none;">
-                    <span class="timer-label">시간</span>
-                    <span class="timer-value" id="timerValue">00:00</span>
-                </div>
-                <div class="score-info">
-                    <span class="score-label">점수</span>
-                    <span class="score-value" id="scoreValue">0</span>
-                </div>
-            </div>
-            <div class="header-right">
-                <button class="btn-view-toggle" id="viewToggleBtn" title="Grid/List 전환">📋</button>
-                <button class="btn-settings-small" id="settingsBtnGame">⚙️</button>
-            </div>
-        </header>
-        
-        <!-- 진행률 표시 바 (주석 처리) -->
-        <!--
-        <div class="progress-bar-container" id="progressBarContainer">
-            <div class="progress-info">
-                <span class="progress-text" id="progressText">0 / 0 완료</span>
-                <span class="progress-percent" id="progressPercent">0%</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-        </div>
-        -->
-
-        <div class="game-content">
->>>>>>> cd9b0c4 (Initial commit)
             <!-- List View (단서 리스트 모드) -->
             <div class="list-view" id="listView" style="display: none;">
                 <div class="clues-list-full" id="cluesListFull">
@@ -279,7 +222,6 @@
                 </div>
             </div>
 
-<<<<<<< HEAD
             <!-- Grid View (격자 모드) - natmal.com 스타일 -->
             <div class="grid-view" id="gridView">
                 <div class="game-layout">
@@ -355,29 +297,10 @@
                                 </div>
                             </div>
                         </div>
-=======
-            <!-- Grid View (격자 모드) -->
-            <div class="grid-view" id="gridView">
-                <div class="clues-section">
-                    <div class="clues-list" id="cluesList">
-                        <!-- 질문들이 여기에 동적으로 추가됩니다 -->
-                    </div>
-                </div>
-
-                <div class="grid-section">
-                    <!-- Canvas 기반 격자 -->
-                    <div class="canvas-container" id="canvasContainer" style="display: none;">
-                        <canvas id="crosswordCanvas"></canvas>
-                    </div>
-                    <!-- HTML 기반 격자 (기존) -->
-                    <div class="grid-container" id="gridContainer">
-                        <!-- 격자가 여기에 동적으로 생성됩니다 -->
->>>>>>> cd9b0c4 (Initial commit)
                     </div>
                 </div>
             </div>
 
-<<<<<<< HEAD
         </div>
 
         <!-- 하단 컨트롤 버튼 -->
@@ -392,26 +315,6 @@
         </div> -->
 
         <!-- 모달 -->
-=======
-            <div class="word-selection-section" id="wordSelectionSection" style="display: none;">
-                <div class="selected-clue" id="selectedClue"></div>
-                <div id="directionHint" class="direction-hint" style="display:none;"></div>
-
-                <div class="word-buttons" id="wordButtons">
-                    <!-- 단어 버튼들이 여기에 동적으로 추가됩니다 -->
-                </div>
-                <div class="selected-word" id="selectedWord"></div>
-            </div>
-        </div>
-
-        <!-- 가상 키보드 (모바일 입력용) -->
-        <div class="virtual-keyboard" id="virtualKeyboard" style="display: none;">
-            <div class="keyboard-row">
-                <input type="text" id="mobileInput" placeholder="글자를 입력하세요" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-            </div>
-        </div>
-
->>>>>>> cd9b0c4 (Initial commit)
         <div class="modal" id="modal">
             <div class="modal-content">
                 <h2 id="modalTitle">축하합니다!</h2>
